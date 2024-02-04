@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;  
+            box-sizing: border-box;
+        }
+        body{
+            height: 100%;
+            width: 100%;
+            background-color: rgb(163, 201, 163);
+        }
+        .main{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        .box{
+            height: 500px;
+            width: 800px;
+            border: 3px solid red;
+            margin-top: 100px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .top{
+            height: 80px;
+            background-color: green;
+            display: flex;
+            text-align: center;
+            justify-content: space-evenly;
+        }
+        .nav{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 100px;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+        .space{
+            padding: 8px;
+            margin: 12px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        .bottom{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            height: calc(100% - 80px);   
+        }
+        .bubble{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgb(21, 80, 21);
+            border-radius: 50%;
+            margin: 10px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 800;
+        }
+        .bubble:hover{
+            background-color: rgb(9, 54, 9);
+            cursor: pointer;
+        }
+        #hit{
+            margin-left:90px ;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="box">
+            <div class="top">
+                <div id="hit" class="nav"><h2>Hit</h2>
+                    <div id="hitvalue" class="space">5</div>
+                </div>
+                <div class="nav"><h2>Time</h2>
+                    <div id="timeIntervel" class="space">60</div>
+                </div>
+                <div class="nav"><h2>Score</h2>
+                    <div id="scoreval" class="space">0</div>
+                </div>
+            </div>
+            <div class="bottom">
+                <!-- <div class="bubble">5</div> -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var timer = 60
+        var score = 0
+        var value
+        function MakeBubble(){
+        var clutter = "";
+        for(var i=1;i<=91;i++){
+           clutter += `<div class="bubble">${Math.floor(Math.random()*10)}</div>`;            
+        }
+        document.querySelector(".bottom").innerHTML=clutter;
+        }
+        function RunTimer(){
+        setInterval(function(){
+            if(timer>0){
+            timer--;
+            document.querySelector("#timeIntervel").textContent=timer;
+            }
+            else{
+                clearInterval(timer)
+                document.querySelector(".bottom").innerHTML="<h1>Game Over</h1>"
+            }
+        },1000);
+        }
+        function ChangeHitValue(){
+            value = Math.floor(Math.random()*10)
+            document.querySelector("#hitvalue").textContent=value;
+        }
+        function Score(){
+            score +=10
+            document.querySelector("#scoreval").innerHTML=score
+        }
+        document.querySelector(".bottom").addEventListener("click",function(dets){
+            var num = Number(dets.target.textContent)
+            if(num === value){
+                Score()
+                ChangeHitValue()
+                MakeBubble()
+            }
+         })
+
+        ChangeHitValue()
+        RunTimer()
+        MakeBubble()
+    </script>
+</body>
+</html>
